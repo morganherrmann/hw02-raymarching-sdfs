@@ -15,7 +15,7 @@ const float EPSILON = 0.0001;
 
 float sceneSDF(vec3 p)
 {
-return length(p)- 01.f;
+return length(p)- 1.f;
 }
 
 float shortestDistanceToSurface(vec3 eye, vec3 marchingDirection, float start, float end) {
@@ -60,16 +60,21 @@ void main() {
 
   //float x = sdBox(dir.xyz, vec3(0.5f, 0.6f, 0.3f));
 
-  out_Col = vec4(0.5 * (dir + vec3(1.0, 1.0, 1.0)), 1.0);
+  //out_Col = vec4(0.5 * (dir + vec3(1.0, 1.0, 1.0)), 1.0);   --> DIR IS WORKING PROPERLY
+
+
+  // -----attempting EXAMPLE HERE------
   float dist = shortestDistanceToSurface(u_Eye, dir, MIN_DIST, MAX_DIST);
 
     if (dist > MAX_DIST - EPSILON) {
-        // Didn't hit anything
+        // Didn't hit anything - BLACK
         out_Col = vec4(0.0, 0.0, 0.0, 1.0);
 		return;
     }
-
+    //otherwise, RED
     out_Col = vec4(1.0, 0.0, 0.0, 1.0);
+
+    //--------------------------------
 
 
 
