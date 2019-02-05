@@ -26,6 +26,7 @@ class OpenGLRenderer {
     prog.setEyeRefUp(camera.controls.eye, camera.controls.center, camera.controls.up);
     prog.setTime(time);
 
+
     for (let drawable of drawables) {
       prog.draw(drawable);
     }
