@@ -44,6 +44,7 @@ TODO
   - [Normal Estimation](http://jamie-wong.com/2016/07/15/ray-marching-signed-distance-functions/)
 
 ### Modifiable GUI Features
+![](giphy2.gif)
  - COLOR/STYLE - A slider allows the user to manipulate the style from electric bluish to a cartoon pink.
  - ROTATION SPEED - The user can also control how quickly the central torus spins and makes waves in the scene.
 
