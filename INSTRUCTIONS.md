@@ -39,7 +39,8 @@ TODO
   
 ### Shading that involves surface normal computation
 ![](https://drive.google.com/uc?export=view&id=1ZXaK66AIJuG1K5hcHg1yGriheFx_t-S5)
-  - To estimate the normals, I initially used the formula linked in the slides, used to estimate the gradient at the current point.
+![](https://drive.google.com/uc?export=view&id=1eFFYgROL7xyk_j_dgPiG5fqsDPxnxyWB)
+  - To estimate the normals, I initially used the formula linked in the slides, used to estimate the gradient at the current point, and used the normals to map colors.
   - [Normal Estimation](http://jamie-wong.com/2016/07/15/ray-marching-signed-distance-functions/)
 
 ### Modifiable GUI Features
