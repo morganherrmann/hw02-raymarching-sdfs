@@ -11,7 +11,7 @@ uniform float u_Color;
 in vec2 fs_Pos;
 out vec4 out_Col;
 
-const int MAX_MARCHING_STEPS = 255;
+const int MAX_MARCHING_STEPS = 25;
 const float MIN_DIST = 0.0;
 const float MAX_DIST = 100.0;
 const float EPSILON = 0.0001;
@@ -135,14 +135,33 @@ vec3 estimateNormal(vec3 p) {
 //compute the shortest distance to the surface
 float shortestDistanceToSurface(vec3 eye, vec3 marchingDirection, float start, float end) {
     float depth = start;
+
+    //create an OUTSIDE BOUNDING BOX FOR THE cube
+    //START WITH A DEPTH OF 1.9 so resources are not wasted
+    depth = 1.9f;
+
     for (int i = 0; i < MAX_MARCHING_STEPS; i++)
     {
-        //float dist = sceneSDF((eye + marchingDirection * depth) / 0.7f) * 0.7f;
+
+        //CREATE A BOUNDING BOX hierarchy FOR THE CUBE and CYLINDER
+        //------------LARGE BOUNDING BOX ------------------
+
+        vec3 curr = eye + marchingDirection * depth;
+        if (curr.x < -0.89f || curr.x > 1.3f || curr.y < -1.f || curr.y > 1.0f){
+          return MAX_DIST + 1.f;
+        }
+
         float dist = cubeSDF((eye + marchingDirection * depth) / 0.7f) * 0.7f;
+        float cyl = cylSDF((eye + marchingDirection * depth) / 0.3f, vec3(0.5, 0.5, 3.7)) * 0.5f;
+
+        //-----SMALLER BOUNDING BOX FOR THE SPHERE AND TORUS SHAPES----//
+        if (curr.x < -0.85f || curr.x > 1.0f || curr.z < 0.1f){
+          return MAX_DIST + 1.f;
+        }
+
         float sphere = sphereSDF(eye + marchingDirection * depth);
         float torus = torusSDF(eye + marchingDirection * depth, vec2(0.5f, 0.4f));
         float small_sphere = sphereSDF((eye + marchingDirection * depth) / 0.3f) * 1.5f;
-        float cyl = cylSDF((eye + marchingDirection * depth) / 0.3f, vec3(0.5, 0.5, 3.7)) * 0.5f;
 
 
         dist = opSmoothIntersection(cyl, dist, 0.4f);
@@ -229,16 +248,17 @@ void main() {
   float dist = shortestDistanceToSurface(u_Eye, dir, MIN_DIST, MAX_DIST);
 
   vec3 ray = u_Eye + dir * dist;
-  vec3 color = estimateNormal(ray);
-
-
-  //color = computeColor(color);
 
     if (dist > MAX_DIST - EPSILON) {
         // Didn't hit anything - BLACK
         out_Col = vec4(0.0, 0.0, 0.0, 1.0);
 		return;
     }
-    //color.r += u_Color;
+    vec3 color = estimateNormal(ray);
+    if (u_Color != 0.f){
+    color = computeColor(color);
+    color.r += u_Color;
+  }
+
     out_Col = vec4(color, 1.0);
 }
