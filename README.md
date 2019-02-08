@@ -4,6 +4,7 @@
 moher@seas.upenn.edu
 www.morganherrmann.com
 
+
 ## Overview
 Objective: To use Raycasting and Raymarching to create an animated, interactive scene.
 
@@ -18,9 +19,11 @@ The field of view has been set to 45 degrees.  Sources are linked below.
  * Subtraction - A small sphere was subtracted from the interior of the cube/cylinder to create a hollow area in the center.
  * Smooth Blend - The center object is a torus smooth unioned with a small sphere, to create a flattened disc shape.
 ### Bounding Volumes
-TODO
-  - Raymarch optimization by way of bounding volumes around SDFs, arranged in
-  a Bounding Volume Hierarchy
+ * To bound the volumes, I first forced any ray to stop and return if their x or y coordinate passed the range of the shape equations.
+ * I also computed the distance at which the shapes began and ended in the z space, using only enough steps along the ray to cover this z space.
+ * There are two bounding boxes arranged- One is for the larger cube and cylinder intersected, the other for the torus/2 spheres in the center.
+ 
+ 
 ### Animated Attributes
   - The color is animated with respect to time.
   - The rotation of the center object and the outer square is also animated with respect to time.
@@ -48,19 +51,7 @@ TODO
  - COLOR/STYLE - A slider allows the user to manipulate the style from electric bluish to a cartoon pink.
  - ROTATION SPEED - The user can also control how quickly the central torus spins and makes waves in the scene.
 
-- __(10 points)__ Following the specifications listed
-[here](https://github.com/pjcozzi/Articles/blob/master/CIS565/GitHubRepo/README.md),
-create your own README.md, renaming this file to INSTRUCTIONS.md. Don't worry
-about discussing runtime optimization for this project. Make sure your
-README contains the following information:
-  - Your name and PennKey
-  - Citation of any external resources you found helpful when implementing this
-  assignment.
-  - A link to your live github.io demo (refer to the pinned Piazza post on
-    how to make a live demo through github.io)
-  - An explanation of the techniques you used to generate your planet features.
-  Please be as detailed as you can; not only will this help you explain your work
-  to recruiters, but it helps us understand your project when we grade it!
+
 
 
 
